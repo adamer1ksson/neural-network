@@ -1,0 +1,22 @@
+
+
+
+class NeuralNetwork:
+    def init(dimensions: list[int]):
+        dimensions = dimensions
+            # exempelvis [1000, 20, 10] för ett NN med 1000 inputs, 
+            # två mellanlager med 20 noder, output 10
+
+    def forward_propagation()
+
+    def backwards_propagation()
+
+
+class Layer:
+    def init(dimensions: tuple[int], func)
+        dimensions = dimensions # ex. (1000, 10) en funktion från R^1000 till R^10
+        func = func # sigmoid function or similar
+
+    def run(input)
+        
+    
