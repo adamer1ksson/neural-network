@@ -28,7 +28,7 @@ class NeuralNetwork:
         return array 
 
     def forward_propagation(self, array: np.ndarray) -> tuple[np.ndarray]:
-        all_outputs = []
+        all_outputs = [array]
         for layer in self.layers:
             array = layer.run(array)
             all_outputs.append(array) 
@@ -42,9 +42,9 @@ class NeuralNetwork:
         all_outputs = self.forward_propagation(input)
         delta = all_outputs[-1] - correct_output
 
-        for i in range(len(self.dim)-2):
+        for i in range(len(self.dim)-1):
             j = -(i+1)
-            dMatrix = (1 / data_size) * delta @ all_outputs[j].T
+            dMatrix = (1 / data_size) * delta @ all_outputs[j-1].T
             dBias = (1 / data_size) * delta @ one_vector
             delta = self.layers[j].matrix.T @ delta * sigmoid_derivative_from_value(all_outputs[j-1])
             self.layers[j].set_matrix(self.layers[j].matrix - learning_rate * dMatrix)
