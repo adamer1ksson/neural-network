@@ -8,7 +8,7 @@ class Layer:
         self.func = func
 
         self.matrix = np.zeros(shape=self.dim)
-        self.bias = np.zeros(self.dim[0])
+        self.bias = np.zeros(shape=(self.dim[0],1))
 
         # Initialize matrix values
         for i in range(self.dim[0]):
