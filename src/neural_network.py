@@ -24,6 +24,7 @@ class NeuralNetwork:
     
     def run(self, array: np.ndarray) -> np.ndarray:
         for layer in self.layers:
+            print(array.shape, layer.matrix.shape, layer.bias.shape, (layer.matrix @ array).shape)
             array = layer.run(array)
         return array 
 
