@@ -24,7 +24,6 @@ class NeuralNetwork:
     
     def run(self, array: np.ndarray) -> np.ndarray:
         for layer in self.layers:
-            print(array.shape, layer.matrix.shape, layer.bias.shape, (layer.matrix @ array).shape)
             array = layer.run(array)
         return array 
 
@@ -51,9 +50,28 @@ class NeuralNetwork:
             self.layers[j].set_matrix(self.layers[j].matrix - learning_rate * dMatrix)
             self.layers[j].set_bias( self.layers[j].bias - learning_rate * dBias)
         
-    def train(self, input: np.ndarray, correct_output: np.ndarray, learning_rate: float, iterations: int) -> None:
-        for i in range(iterations):
-            self.back_propagation_step(input, correct_output, learning_rate)
+    def train_batches(self, batches: list[tuple[np.ndarray]], learning_rate: float) -> None: 
+        for batch in batches:
+            self.back_propagation_step(batch[0], batch[1], learning_rate)
+    
+    def train(self, batches: list[tuple[np.ndarray]], learning_rate: float, epochs: int) -> None:
+        for i in range(epochs):
+            self.train_batches(batches, learning_rate)
+    
+    def test(self, batches: list[tuple[np.ndarray]], batch_size: int) -> float:
+        correct: int = 0
+        wrong: int = 0
+        for batch in batches:
+            guesses = self.run(batch[0]) # N x batchsize
+            correct_output = batch[1] # N x batchsize
+            for i in range(batch_size):
+                if np.argmax(guesses[:, i]).item() == np.argmax(correct_output[:, i]).item():
+                    correct += 1
+                else:
+                    wrong += 1
+        return correct/(wrong + correct)
+
+
         
 
     
